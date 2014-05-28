@@ -203,7 +203,7 @@
         <div class="span2" id="posx">X: </div>
         <div class="span2" id="posy">Y: </div>
         <div class="span2" id="posz">Z: </div>
-      	<button type="button" class="btn btn-primary span1 inputonline notprinting" onclick="sendCmd('G28 X0 Y0 Z0')" data-toggle="collapse" data-target="#movepos"><i class="icon-home"></i></button> 
+      	<button type="button" class="btn btn-primary span1 inputonline notprinting" onclick="sendCmd('G28 X0 Y0 Z0')"><i class="icon-home"></i></button> 
       	<button type="button" class="btn btn-primary span3" data-toggle="collapse" data-target="#movepos"><i class="icon-move"></i> <?php _("Move head") ?></button> 
       </div>
 			<div id="movepos" class="collapse">
