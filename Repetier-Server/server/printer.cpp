@@ -442,6 +442,10 @@ void Printer::analyseResponse(string &res) {
     {
         size_t line = atoi(h.c_str());
         resendLine(line);
+    } else if (extract(res,"Line:",h))
+    {
+        size_t line = atoi(h.c_str())+1;
+        resendLine(line);
     }
     else if (res.find("ok")==0)
     {

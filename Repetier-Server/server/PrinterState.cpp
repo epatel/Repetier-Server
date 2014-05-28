@@ -253,6 +253,12 @@ void PrinterState::analyze(GCode &code)
             case 203: // Temp monitor
                 tempMonitor = code.getS();
                 break;
+            case 220:
+	        speedMultiply = code.getS();
+                break;
+            case 221:
+	        flowMultiply = code.getS();
+                break;
         }
     }
     else if (code.hasT())
@@ -286,6 +292,8 @@ void PrinterState::analyseResponse(const string &res,uint8_t &rtype) {
     char b[100];
     if (extract(res,"FIRMWARE_NAME:",h))
     {
+        speedMultiply = 100;
+        flowMultiply = 100;
         firmware = h;
         isRepetier = h.find("Repetier")!=string::npos;
         isMarlin = h.find("Marlin")!=string::npos;

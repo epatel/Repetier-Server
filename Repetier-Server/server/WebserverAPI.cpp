@@ -236,7 +236,7 @@ namespace repetier {
     void HandleWebrequest(struct mg_connection *conn) {
         mg_printf(conn, "HTTP/1.0 200 OK\r\n"
                   "Cache-Control:public, max-age=0\r\n"
-                  "Server: Repetier-Server\r\n"
+                  "Server: Repetier-Server " __TIME__ " " __DATE__ "\r\n"
                   "Content-Type: text/html; charset=utf-8\r\n\r\n");
         const struct mg_request_info *ri = mg_get_request_info(conn);
         // First check the path for its parts
@@ -677,7 +677,7 @@ namespace repetier {
         FillTemplate(content, content2, obj);
         mg_printf(conn, "HTTP/1.0 200 OK\r\n"
                   "Cache-Control:public, max-age=0\r\n"
-                  "Server: Repetier-Server\r\n"
+                  "Server: Repetier-Server " __TIME__ " " __DATE__ "\r\n"
                   "Content-Type: text/html; charset=utf-8\r\n\r\n");
         mg_write(conn, content2.c_str(), content2.length());
         return (void*)"";
