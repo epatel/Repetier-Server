@@ -21,6 +21,7 @@
 #define _SCL_SECURE_NO_DEPRECATE 
 
 #include "Printjob.h"
+#include "PrinterState.h"
 #include <boost/filesystem.hpp>
 #include <vector>
 #include "printer.h"
@@ -265,6 +266,7 @@ void PrintjobManager::startJob(int id) {
     if(!runningJob.get()) return; // unknown job
     runningJob->setRunning();
     runningJob->start();
+    printer->state->setLayer(1);
     printer->getScriptManager()->pushCompleteJob("Start");
     if(jobin.is_open()) jobin.close();
     jobin.open(runningJob->getFilename().c_str(),ifstream::in);
