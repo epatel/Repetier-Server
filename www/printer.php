@@ -107,7 +107,7 @@
 					<h5><?php _("Set extruder temperature") ?></h5>
 					<div class="input-append"><input id="ext{{extruderid}}newtemp" type="text" style="width:40px" class="inputonline"/> <button id="ext{{extruderid}}settemp" class="btn "><i class="icon-breaker"></i> <?php _("Set temperature")?></button><button id="ext{{extruderid}}off" class="btn "><i class="icon-off"></i> <?php _("Turn off")?></button></div>
 					<h5><?php _("Extrude") ?></h5>
-					<div class="input-append"><input id="ext{{extruderid}}extrude" type="text" style="width:40px" class="inputonline"/> <button id="ext{{extruderid}}sendExtrude" class="btn "><i class="icon-breaker"></i> <?php _("Extrude")?></button></div>
+					<div class="input-append"><input id="ext{{extruderid}}extrude" type="text" style="width:40px" class="inputonline"/> <button id="ext{{extruderid}}sendExtrude" class="btn "><i class="icon-breaker"></i> <?php _("Extrude")?></button><span style="padding:5px" id="jobbutton"></span></div>
 					<h5><?php _("Retract") ?></h5>
 					<div class="input-append"><input id="ext{{extruderid}}retract" type="text" style="width:40px" class="inputonline"/> <button id="ext{{extruderid}}sendRetract" class="btn "><i class="icon-breaker"></i> <?php _("Retract")?></button></div>
 					</form>            
@@ -504,6 +504,7 @@ function copyModel(id) {
 function refreshJobs() {
 	$.getJSON('/printer/job/{{slug}}?a=list', function(data) {
 		updateJobs(data);
+		updateJobbutton(data);
 	});
 	setTimeout('refreshJobs();',(jobrunning ? 4567 : 9864));
 }
@@ -525,10 +526,31 @@ function updateJobs(data) {
   		s+='</td></tr>';
   	});
   	$('#joblist').html(s);
-  	updateMsg(data);
+  	// updateMsg(data);
   	if(jobrunning!=newjobrunning) {
   		jobrunning = newjobrunning;
   		updateJobs(data);
+  	}
+}
+function updateJobbutton(data) {
+	  if(!data.data)  return;
+		s = '';
+		newjobrunning = false;
+  	$.each(data.data, function(key,val) {
+  		if(val.state=='running') {
+  			newjobrunning = true;
+  		} else {
+  		  if(!jobrunning && !newjobrunning) {
+	  			s+='<button class="btn btn-success" onclick="startJob('+val.id+')"><i class="icon-play"></i> <?php _("Start next job") ?></button> ';
+				return false;
+		  }
+  		}
+  	});
+  	$('#jobbutton').html(s);
+  	updateMsg(data);
+  	if(jobrunning!=newjobrunning) {
+  		jobrunning = newjobrunning;
+  		updateJobbutton(data);
   	}
 }
 function refreshModels() {
