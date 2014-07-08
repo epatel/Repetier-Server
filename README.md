@@ -1,5 +1,9 @@
 # Repetier-Server
 
+## Personal version
+
+I have an old Sells Mendel with a Gen6 board. I have installed a tweaked version of Merlin on it. This I am running from a Raspberry Pi with Repertier Server. This repo contain some tweaks I made to make it better suit my needs.
+
 ## Objective
 
 The aim of this server is it, to offer a link between 3d printer and host software.
