@@ -538,11 +538,12 @@ function updateJobbutton(data) {
 		newjobrunning = false;
   	$.each(data.data, function(key,val) {
   		if(val.state=='running') {
+			s = '';
   			newjobrunning = true;
-  		} else {
+			return false;
+  		} else if(s=='')  {
   		  if(!jobrunning && !newjobrunning) {
-	  			s+='<button class="btn btn-success" onclick="startJob('+val.id+')"><i class="icon-play"></i> <?php _("Start next job") ?></button> ';
-				return false;
+  			s = '<button class="btn btn-success" onclick="startJob('+val.id+')"><i class="icon-play"></i> <?php _("Start next job") ?></button> ';
 		  }
   		}
   	});
